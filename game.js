@@ -55,7 +55,10 @@ document.addEventListener('DOMContentLoaded', () => {
     let output = '';
     let nextdivid = currentdivid;
     if (inputstring == "help"){
-      output = "";
+      output = fetch('help.txt')
+        .then(response => response.text())
+        .then(text => text)
+        .catch(error => 'Error loading help text');
       nextdivid = currentdivid;
     } else if (inputstring == "outline"){
       output = "";
