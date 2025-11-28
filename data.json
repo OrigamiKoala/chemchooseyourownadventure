@@ -1,1 +1,1 @@
-
+[{"id":1,"text":"the game has started","type":"frq","next":2,"correct":"hi","op1":"hi1","id1":2,"op2":"hi2","id2":3,"op3":"hi3","id3":4,"op4":"hi4","id4":5},{"id":2,"text":"wow","type":"fr","next":3},{"id":3,"text":"end","type":"frq","next":1,"correct":"hi"}]
