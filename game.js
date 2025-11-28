@@ -9,6 +9,9 @@ document.addEventListener('DOMContentLoaded', () => {
   let isProcessing = false;
   let JSdata = null;
   let previousdivid = 0;
+  let output = ''; // will hold help.txt content
+
+  
 
   // load data from json and render initial prompt
   fetch('data.json')
@@ -55,11 +58,15 @@ document.addEventListener('DOMContentLoaded', () => {
     let output = '';
     let nextdivid = currentdivid;
     if (inputstring == "help"){
-      output = fetch('help.txt')
-        .then(response => response.text())
-        .then(text => text)
-        .catch(error => 'Error loading help text');
-      nextdivid = currentdivid;
+      // load help.txt
+      console.log('loading help.txt');
+      fetch('help.txt').then(response => response.text()).then(data => {
+      output = data.toString();
+      console.log('help.txt loaded');
+      console.log(output);
+      }).catch(error => {
+      console.error('Error loading help.txt:', error);
+      });
     } else if (inputstring == "outline"){
       output = "";
     } else if (inputstring == "undo"){
