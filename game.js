@@ -1,78 +1,106 @@
-const qtext = document.getElementById("text")
-const previousdiv = document.getElementById("previous")
-const inputElement = document.getElementById("responseform")
-var gameinput = inputElement.value
-var previoustext = qtext.innerText
-var outputtext = ""
+document.addEventListener('DOMContentLoaded', () => {
+  const qtext = document.getElementById('text');
+  const previousdiv = document.getElementById('previous');
+  const formElement = document.getElementById('responseform');
+  const inputField = document.getElementById('response');
 
-let currentid = 1
+  let outputtext = '';
+  let currentid = 1;
+  let JSdata = null;
 
-// load data from json
+  // load data from json and render initial prompt
+  fetch('data.json')
+    .then(response => response.json())
+    .then(data => {
+      JSdata = data;
+      if (JSdata && JSdata[currentid] && qtext) {
+        qtext.innerText = JSdata[currentid].text || '';
+      }
+    })
+    .catch(error => {
+      console.error('Error loading data:', error);
+    });
 
-let JSdata; // Declare JSdata outside
-fetch('data.json')
-  .then(response => {
-    return response.json();
-  })
-  .then(data => {
-    JSdata = data; // JSdata now holds the parsed JSON object
-    start(); // Start the game ONLY when data is loaded
-  })
-  .catch(error => {
-    console.error('Error loading data:', error);
-  });
+  // attach listener to form (safe when form exists)
+  if (formElement) {
+    formElement.addEventListener('submit', updategame);
+  }
 
+  // receiving input, returns output text and next id
+  function parseinput(inputstring, currentdivid){
+    if (!JSdata) return ['Loading...', currentdivid];
+    const currentobj = JSdata[currentdivid];
+    if (!currentobj) return ['Unknown node', currentdivid];
 
-// update
-
-inputElement.addEventListener('submit', updategame);
-
-// receiving input, returns output text
-
-function parseinput(inputstring, currentdivid){
-  currentobj = JSdata[currentdivid]
-  output = ""
-  if (currentobj.type=="frq"){
-    if (inputstring == currentobj.correct){
-      nextdivid = currentobj.next
-      currentobj = JSdata[currentobj.next]
-      output = currentobj.text
+    // Ensure `text` exists on the current object to avoid undefined errors
+    if (typeof currentobj.text === 'undefined') {
+      currentobj.text = '';
     }
-    else {
-      output = "Try again"
-      nextdivid = currentdivid
+
+    let output = '';
+    let nextdivid = currentdivid;
+
+    if (currentobj.type === 'frq') {
+      if (inputstring === currentobj.correct) {
+        nextdivid = currentobj.next;
+        const nextobj = JSdata[nextdivid];
+        output = nextobj ? (nextobj.text || '') : 'Next not found';
+      } else {
+        output = 'Try again';
+      }
+    } else if (currentobj.type === 'fr') {
+      nextdivid = currentobj.next;
+      const nextobj = JSdata[nextdivid];
+      output = nextobj ? (nextobj.text || '') : 'Next not found';
+    } else if (currentobj.type === 'mcq') {
+      if (inputstring == "1") {
+        nextdivid = currentobj.op1;
+      }
+      if (inputstring == "2") {
+        nextdivid = currentobj.op2;
+      }
+      if (inputstring == "3") {
+        nextdivid = currentobj.op3;
+      }
+      if (inputstring == "4") {
+        nextdivid = currentobj.op4;
+      }
+      const nextobj = JSdata[nextdivid];
+      output = nextobj ? (nextobj.text || '') : 'Next not found';
+    } else {
+      output = 'Unrecognized question type';
+    }
+
+    return [output, nextdivid];
+  }
+
+  // update the game
+  function updategame(e) {
+    if (e && typeof e.preventDefault === 'function') {
+      e.preventDefault();
+    }
+
+    const userInput = inputField ? inputField.value : '';
+    const previoustext = qtext ? qtext.innerText : '';
+
+    const [newText, nextId] = parseinput(userInput, currentid);
+
+    // add previous interaction to the previous div instead of replacing form
+    if (previousdiv) {
+      const container = document.createElement('div');
+      container.className = 'container';
+      container.innerHTML = `<div>${previoustext}</div><div>${userInput}</div>`;
+      previousdiv.insertBefore(container, previousdiv.firstChild);
+    }
+
+    if (qtext) qtext.innerText = newText;
+    currentid = nextId;
+
+    if (inputField) {
+      inputField.value = '';
+      inputField.focus();
     }
   }
- // if (currentobj.type=="mcq"){
- //   
- // }
-  if (currentobj.type=="fr"){
-    nextdivid = currentobj.next
-    currentobj = JSdata[currentobj.next]
-    output = currentobj.text
-  }
-  else {
-    output = "Try again"
-    nextdivid = currentdivid
-  }
-  return [output, nextdivid]
-}
-
-// update the game
-
-function updategame(e) {
-  e.preventDefault();
-  
-  qtext = document.getElementById("text")
-  previousdiv = document.getElementById("previous")
-  inputElement = document.getElementById("responseform")
-  gameinput = inputElement.value
-  previoustext = qtext.innerText
-  outputtext = parseinput(gameinput, currentid)[0]
-  currentid = parseinput(gameinput, currentid)[1]
-  inputElement.innerHTML = '<div class="container"><div>'+previoustext+'</div><div>'+gameinput+'</div></div>'
-  inputElement.insertAdjacentHTML('afterend', '<div class="container" id="previous"><div id="text">'+outputtext+'</div><form id="responseform"><label for="response">Response: </label><input type="text" id="response" name="response"></div>');
-  previoustext = ouputtext
-}
+});
 
 
