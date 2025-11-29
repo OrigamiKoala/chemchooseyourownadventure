@@ -1,8 +1,9 @@
 List of commands:
 <br> 'help' - open up the help manual (this one)
 <br> 'outline' - open up the outline (can jump to different sections)
-<br> 'undo' - undo previous response
+<br> 'undo' - undo previous response (you can't undo more than that)
 <br>
+<br> You can skip the typing animation by hitting the enter key.
 <br> To restart the game, just reload the page or relaunch the HTML file. Your progress will not be saved; you can jump to the section you were on by typing 'outline'
 <br>
 How to format answers:
