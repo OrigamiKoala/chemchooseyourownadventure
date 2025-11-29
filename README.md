@@ -5,6 +5,8 @@ Hopefully I was (at least somewhat) successful!
 
 To play the game, download the Github repository and run index.html.
 
+Or, you can view it live at https://bit.ly/chemcyoa.
+
 For those who aren't CS nerds:
 
 1. Go to (https://github.com/OrigamiKoala/chemchooseyourownadventure) and click on "Code" (the green button). Then, click "Download as Zip".
