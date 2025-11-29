@@ -212,7 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const newTextDiv = document.createElement('div');
       newTextDiv.className = 'question';
      // newTextDiv.innerHTML = newText;
-      typeWriter(newTextDiv, newText, 300); // 200 WPM typing effect
+      typeWriter(newTextDiv, newText, 25); // 200 WPM typing effect
       formElement.parentNode.insertBefore(newTextDiv, formElement);
       // scroll to the very bottom of the page so the form and new question are visible
       scrollToBottom(true);
