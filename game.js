@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (previousdiv && formElement) {
           const initialDiv = document.createElement('div');
           initialDiv.className = 'question';
-          initialDiv.innerHTML = initialText;
+          typeWriter(initialDiv, initialText, 30);
           formElement.parentNode.insertBefore(initialDiv, formElement);
           // remove the original placeholder element if present so it doesn't duplicate
           if (qtext && qtext.parentNode) qtext.parentNode.removeChild(qtext);
@@ -212,7 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const newTextDiv = document.createElement('div');
       newTextDiv.className = 'question';
      // newTextDiv.innerHTML = newText;
-      typeWriter(newTextDiv, newText, 25); // 200 WPM typing effect
+      typeWriter(newTextDiv, newText, 30); // 200 WPM typing effect
       formElement.parentNode.insertBefore(newTextDiv, formElement);
       // scroll to the very bottom of the page so the form and new question are visible
       scrollToBottom(true);
