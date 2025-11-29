@@ -124,6 +124,15 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         previousdiv.appendChild(container);
       }
+      
+      // insert an empty line after user input
+      const emptyLine = document.createElement('div');
+      emptyLine.style.height = '1em';
+      if (formElement && previousdiv === formElement.parentNode) {
+        previousdiv.insertBefore(emptyLine, formElement);
+      } else {
+        previousdiv.appendChild(emptyLine);
+      }
     }
 
     // insert newText above the form as a question element
@@ -131,8 +140,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const newTextDiv = document.createElement('div');
       newTextDiv.className = 'question';
       newTextDiv.innerText = newText;
-      newTextDiv.appendChild(document.createElement('br'));
-      newTextDiv.appendChild(document.createElement('br'));
       formElement.parentNode.insertBefore(newTextDiv, formElement);
     }
 
