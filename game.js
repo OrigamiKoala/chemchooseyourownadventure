@@ -187,6 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // receiving input, returns output text and next id
   function parseinput(inputstring, currentdivid){
+    inputstring = encodeURIComponent(inputstring.trim());
     if (!JSdata) return ['Loading...', currentdivid];
     const currentobj = JSdata[currentdivid];
     if (!currentobj) return ['Unknown node', currentdivid];
@@ -266,14 +267,14 @@ document.addEventListener('DOMContentLoaded', () => {
     isProcessing = true;
 
     const userInput = inputField ? inputField.value : '';
-    const [newText, nextId] = parseinput(userInput, currentid);
+    let [newText, nextId] = parseinput(userInput, currentid);
     inputField.value = '';
 
     // append only the user's response to the history (do not re-insert the previous question text)
     if (previousdiv) {
       const container = document.createElement('div');
       container.className = 'response';
-      container.innerHTML = `<div>${userInput}</div>`;
+      container.innerHTML = `<div>${encodeURIComponent(userInput)}</div>`;
       // insert the container just before the form so it appears in history
       if (formElement && previousdiv === formElement.parentNode) {
         previousdiv.insertBefore(container, formElement);
