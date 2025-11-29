@@ -93,15 +93,15 @@ document.addEventListener('DOMContentLoaded', () => {
 // typewriter effect: display text as if being typed
 // typewriter effect: display text as if being typed
 function typeWriter(element, text, speed, callback = () => {}) {
-    let i = 0;
+let i = 0;
     element.innerHTML = ''; // Clear existing text
 
-    // NEW: Reset the timeout ID when a new typing context starts
+    // ✅ NEW: UNCONDITIONAL STATE RESET
     if (typingTimeoutId) {
         clearTimeout(typingTimeoutId);
-        typingTimeoutId = null;
     }
-
+    typingTimeoutId = null;
+    currentTypingContext = null; 
     // NEW: Store the context and define a finish method
     currentTypingContext = {
         element: element,
@@ -124,7 +124,9 @@ function typeWriter(element, text, speed, callback = () => {}) {
     
     function type() {
         // ... (existing check for currentTypingContext.finished) ...
-
+        if (currentTypingContext && currentTypingContext.finished) {
+            return; 
+        }
         if (i < text.length) {
             // ... (existing tag handling and character append logic) ...
             
