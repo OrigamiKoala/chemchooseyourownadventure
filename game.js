@@ -72,7 +72,26 @@ document.addEventListener('DOMContentLoaded', () => {
   // attach listener to form (safe when form exists)
   if (formElement) {
     formElement.addEventListener('submit', updategame);
+    // set initial form height variable
+    updateFormHeightVar();
   }
+
+  // utility: smooth scroll to bottom of page (so form + latest qtext are visible)
+  function scrollToBottom(smooth = true) {
+    const behavior = smooth ? 'smooth' : 'instant';
+    // use requestAnimationFrame to ensure DOM layout is updated before scrolling
+    window.requestAnimationFrame(() => {
+      window.scrollTo({ top: document.body.scrollHeight, behavior });
+    });
+  }
+
+  // update CSS variable with current form height so CSS can use it for scroll-margin
+  function updateFormHeightVar() {
+    if (!formElement) return;
+    const h = formElement.getBoundingClientRect().height || 0;
+    document.documentElement.style.setProperty('--form-height', h + 'px');
+  }
+  window.addEventListener('resize', updateFormHeightVar);
 
   // receiving input, returns output text and next id
   function parseinput(inputstring, currentdivid){
@@ -154,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
       
       // insert an empty line after user input
       const emptyLine = document.createElement('div');
-      emptyLine.style.height = '1em';
+      emptyLine.className = 'spacer';
       if (formElement && previousdiv === formElement.parentNode) {
         previousdiv.insertBefore(emptyLine, formElement);
       } else {
@@ -168,6 +187,19 @@ document.addEventListener('DOMContentLoaded', () => {
       newTextDiv.className = 'question';
       newTextDiv.innerHTML = newText;
       formElement.parentNode.insertBefore(newTextDiv, formElement);
+      // ensure the new question is scrolled into view just above the fixed form
+      // compute a target scroll so the bottom of the newTextDiv sits above the fixed form
+      try {
+        // ensure CSS var for form height is current
+        updateFormHeightVar();
+        // compute a target scroll so the bottom of the newTextDiv sits above the fixed form
+        const formRect = formElement.getBoundingClientRect();
+        const formHeight = formRect.height || 0;
+        const gap = 12; // px gap between question bottom and form
+        const newRect = newTextDiv.getBoundingClientRect();
+        const target = window.scrollY + newRect.bottom - (window.innerHeight - formHeight - gap);
+        window.scrollTo({ top: Math.max(0, target), behavior: 'smooth' });
+      } catch (err) { /* ignore scroll errors */ }
     }
 
     currentid = nextId;
@@ -176,11 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (inputField) {
         inputField.value = '';
         inputField.focus();
-        // scroll to position input field near the bottom of the screen
-        const inputRect = inputField.getBoundingClientRect();
-        const scrollMargin = 100; // keep input 100px above bottom
-        const targetScrollTop = window.scrollY + inputRect.bottom - window.innerHeight + scrollMargin;
-        window.scrollTo({ top: targetScrollTop, behavior: 'instant' });
+        // no additional scrolling here; question is scrolled above
       }
     } finally {
       // allow subsequent submissions
