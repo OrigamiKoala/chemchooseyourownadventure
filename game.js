@@ -38,11 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (JSoutline && JSoutline[currentid]) {
         outlineText = 'Click on a section to jump to it.<br>';
         for (const item of JSoutline) {
-<<<<<<< HEAD
           outlineText += '<button class="outline" onclick="jumpTo('+item.div+')">' +item.reference_num +' ' + item.content + '</button><br>';
-=======
-          outlineText += '<button>' +item.reference_num +' ' + item.content + '</button><br>';
->>>>>>> parent of c0e351a (Update game.js)
         }
       }
     }).catch(error => {
