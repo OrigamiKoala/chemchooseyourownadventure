@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let isProcessing = false;
   let helpText = '';
   let outlineText = '';
+  let JSoutline = null;
 
   // preload help.txt
   fetch('help.txt')
@@ -17,10 +18,20 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(data => { helpText = data; })
     .catch(error => { console.error('Error loading help text:', error); });
 
-  fetch('outline.html')
-    .then(response => response.text())
-    .then(data => { outlineText = data; })
-    .catch(error => { console.error('Error loading outline:', error); });
+    // preload outline.json
+  fetch('outline.json')
+    .then(response => response.json())
+    .then(data => {
+      JSoutline = data;
+      if (JSoutline && JSoutline[currentid]) {
+        for (const item of JSoutline[currentid].outline) {
+          outlineText += '-' + item + '\n';
+        }
+      }
+    }).catch(error => {
+      console.error('Error loading data:', error);
+    });
+
 
   // load data from json and render initial prompt
   fetch('data.json')
