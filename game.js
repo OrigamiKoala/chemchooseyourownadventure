@@ -5,6 +5,7 @@ function jumpTo(divid) {
     formElement.scrollIntoView({ behavior: 'smooth' });
   }
   updategame();
+  console.log("jumpTo ran!");
 }
 
 document.addEventListener('DOMContentLoaded', () => {
