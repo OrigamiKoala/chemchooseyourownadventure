@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=JetBrains+Mono:wght@300;400;700&display=swap');
+
 :root{
     --bg: #0f1724; /* dark navy */
     --card: #0f1724; /* same as bg for seamless look */
@@ -9,8 +11,6 @@
 }
 
 /* Elegant serif + monospaced 'geeky' fonts */
-@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=JetBrains+Mono:wght@300;400;700&display=swap');
-
 /* Base */
 *{box-sizing:border-box}
 html,body{height:100%}
