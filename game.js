@@ -138,6 +138,7 @@ function typeWriter(element, text, speed) {
             currentTypingContext.finished = true; // Mark as finished
             typingTimeoutId = null; // Clear ID since it finished
             scrollToBottom(true);
+            callback();
         }
     }
     type();
@@ -253,28 +254,39 @@ function typeWriter(element, text, speed) {
 
     // insert newText above the form as a question element
     if (formElement) {
-      const newTextDiv = document.createElement('div');
-      newTextDiv.className = 'question';
-     // newTextDiv.innerHTML = newText;
-      typeWriter(newTextDiv, newText, 20); // 200 WPM typing effect
-      formElement.parentNode.insertBefore(newTextDiv, formElement);
-      // scroll to the very bottom of the page so the form and new question are visible
-      scrollToBottom(true);
-    }
+    const newTextDiv = document.createElement('div');
+    newTextDiv.className = 'question';
+    
+    // --- ⬇️ NEW CLEANUP FUNCTION ⬇️ ---
+    const finishQuestionTyping = () => {
+        // Only allow subsequent submissions and focus the input AFTER typing is done
+        
+        // Final cleanup for the input field
+        const inputField = document.getElementById('response');
+        if (inputField) { 
+            inputField.value = '';
+            inputField.focus(); 
+        }
+        
+        // Allow subsequent submissions
+        isProcessing = false;
+        
+        // Ensure final scroll is smooth
+        scrollToBottom(true);
+    };
+    // --- ⬆️ END NEW CLEANUP FUNCTION ⬆️ ---
 
+    // newTextDiv.innerHTML = newText;
+    // Pass the cleanup function as the callback
+    typeWriter(newTextDiv, newText, 20, finishQuestionTyping); 
+    
+    formElement.parentNode.insertBefore(newTextDiv, formElement);
+    
+    // Initial instant scroll to ensure typing is visible from the start
+    // scrollToBottom(true) will be called inside the typewriter loop (false)
+    // and then called by the callback (true).
+}
     currentid = nextId;
-
-    try {
-      if (inputField) {
-        inputField.value = '';
-        inputField.focus();
-        // no additional scrolling here; question is scrolled above
-      }
-    } finally {
-      // allow subsequent submissions
-      isProcessing = false;
-    }
-  }
 });
 
 
