@@ -285,8 +285,9 @@ function typeWriter(element, text, speed) {
     // Initial instant scroll to ensure typing is visible from the start
     // scrollToBottom(true) will be called inside the typewriter loop (false)
     // and then called by the callback (true).
-}
     currentid = nextId;
+    }
+  }
 });
 
 
