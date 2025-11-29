@@ -39,36 +39,46 @@ body{
 
 .question, .response, .response .previoustext {
     max-width:900px;
-    margin:0 auto;
 }
 
-.question{
+.question {
+    /* Keep your existing visual styles (background, border, etc.) */
     background: linear-gradient(180deg, rgba(125,211,252,0.06), rgba(96,165,250,0.04));
-    border:1px solid rgba(125,211,252,0.08);
-    padding:16px 20px;
-    border-radius:12px;
-    color:var(--text);
-    font-size:1rem;
-    line-height:1.45;
+    border: 1px solid rgba(125,211,252,0.08);
+    padding: 16px 20px;
+    border-radius: 12px;
+    color: var(--text);
+    font-size: 1rem;
+    line-height: 1.45;
     box-shadow: 0 6px 20px rgba(2,6,23,0.6);
-    /* ensure question isn't hidden behind the fixed form; uses CSS var set by JS */
-    scroll-margin-bottom: calc(var(--form-height, 160px) + 12px);
     margin-bottom: 6px;
-    /* geeky monospaced look for questions */
-    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, 'Courier New', monospace;
+    font-family: 'JetBrains Mono', monospace;
     letter-spacing: 0.2px;
-    font-variant-ligatures: none;
+    
+    /* --- NEW ALIGNMENT CODE --- */
+    align-self: flex-start;  /* Aligns the box to the left flex start */
+    margin-left: 0;          /* Ensures it sticks to the left */
+    margin-right: auto;      /* Pushes against the right */
+    max-width: 85%;          /* Reduces width so you can see the alignment */
+    border-top-left-radius: 2px; /* Optional: adds a "chat bubble" corner */
 }
 
-.response{
+.response {
+    /* Keep your existing visual styles */
     background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-    border-radius:10px;
-    padding:10px 14px;
-    color:var(--accent-2);
-    font-weight:600;
-    border:1px solid rgba(255,255,255,0.03);
-    max-width:880px;
-    margin:0 auto;
+    border-radius: 10px;
+    padding: 10px 14px;
+    color: var(--accent-2);
+    font-weight: 600;
+    border: 1px solid rgba(255,255,255,0.03);
+    
+    /* --- NEW ALIGNMENT CODE --- */
+    align-self: flex-end;    /* Aligns the box to the right flex end */
+    margin-left: auto;       /* Pushes against the left */
+    margin-right: 0;         /* Ensures it sticks to the right */
+    max-width: 85%;          /* Reduces width so you can see the alignment */
+    text-align: right;       /* Aligns the text inside to the right */
+    border-bottom-right-radius: 2px; /* Optional: adds a "chat bubble" corner */
 }
 
 .response div{color:var(--muted); font-weight:500}
