@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
       currentobj.text = '';
     }
 
-    let output = '';
+    let output = '<br>';
     let nextdivid = currentdivid;
     if (inputstring == "help"){
       // return preloaded help text
