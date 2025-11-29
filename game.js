@@ -85,13 +85,34 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // update CSS variable with current form height so CSS can use it for scroll-margin
-  function updateFormHeightVar() {
-    if (!formElement) return;
-    const h = formElement.getBoundingClientRect().height || 0;
-    document.documentElement.style.setProperty('--form-height', h + 'px');
+  // typewriter effect: display text as if being typed at given WPM
+  // 150 WPM ≈ 12.5 characters per second (150 words * 5 chars/word / 60 sec)
+  // ≈ 80ms per character
+  function typewriterEffect(element, htmlText, wpm = 150) {
+    const charsPerSecond = (wpm * 5) / 60; // convert WPM to chars/second (avg 5 chars/word)
+    const delayPerChar = 1000 / charsPerSecond; // ms per character
+
+    element.innerHTML = ''; // clear the element
+    let charIndex = 0;
+
+    // parse HTML and flatten to text for typing
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = htmlText;
+    const fullText = tempDiv.textContent || tempDiv.innerText || '';
+
+    function typeNextChar() {
+      if (charIndex < fullText.length) {
+        element.innerHTML = fullText.substring(0, charIndex + 1);
+        charIndex++;
+        setTimeout(typeNextChar, delayPerChar);
+      } else {
+        // typing complete, render full HTML
+        element.innerHTML = htmlText;
+      }
+    }
+
+    typeNextChar();
   }
-  window.addEventListener('resize', updateFormHeightVar);
 
   // receiving input, returns output text and next id
   function parseinput(inputstring, currentdivid){
@@ -185,7 +206,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (formElement) {
       const newTextDiv = document.createElement('div');
       newTextDiv.className = 'question';
-      newTextDiv.innerHTML = newText;
+     // newTextDiv.innerHTML = newText;
+      typewriterEffect(newTextDiv, newText, 300); // 200 WPM typing effect
       formElement.parentNode.insertBefore(newTextDiv, formElement);
       // scroll to the very bottom of the page so the form and new question are visible
       scrollToBottom(true);
