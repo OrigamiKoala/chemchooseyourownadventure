@@ -132,6 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
       newTextDiv.className = 'question';
       newTextDiv.innerText = newText;
       newTextDiv.appendChild(document.createElement('br'));
+      newTextDiv.appendChild(document.createElement('br'));
       formElement.parentNode.insertBefore(newTextDiv, formElement);
     }
 
