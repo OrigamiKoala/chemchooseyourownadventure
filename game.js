@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
       currentobj.text = '';
     }
 
-    let output = '<br><br>';
+    let output = '';
     let nextdivid = currentdivid;
     if (inputstring == "help"){
       // return preloaded help text
@@ -99,6 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
       output = 'Unrecognized answer choice';
     }
     previousdivid = currentdivid;
+    output = "<br><br>" + output;
     return [output, nextdivid];
   }
 
