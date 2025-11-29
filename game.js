@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // typewriter effect: display text as if being typed
 // typewriter effect: display text as if being typed
 // typewriter effect: display text as if being typed
-function typeWriter(element, text, speed) {
+function typeWriter(element, text, speed, callback = () => {}) {
     let i = 0;
     element.innerHTML = ''; // Clear existing text
 
