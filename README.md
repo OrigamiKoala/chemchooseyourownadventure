@@ -1,1 +1,20 @@
 # chemchooseyourownadventure
+This is a choose your own adventure game, built by Carl, in an attempt to gamify the learning of chemistry.
+
+Hopefully I was (at least somewhat) successful!
+
+To play the game, download the Github repository and run index.html.
+
+For those who aren't CS nerds:
+
+1. Go to (https://github.com/OrigamiKoala/chemchooseyourownadventure) and click on "Code" (the green button). Then, click "Download as Zip".
+2. In your file manager, click on the zip and open it.
+3. Then, run the index.html file. Please note that most modern browsers (Chrome, Firefox, Safari, etc) have made their CORS rules stricter, which essentially means you can't open the html file in your browser. If you do, the game won't work properly. Either open the html file in a terminal, or in an older browser.
+
+If you have any feedback (positive or otherwise), please feel free to fill out a feedback form at https://bit.ly/chemcyoafeedback.
+
+Since most of the code for this game was AI-generated (via Visual Studio Code's Github Copilot and Google Gemini), I cannot claim credit for that, or put it under a license.
+
+However, any text that appears in the game is 100% human-written by yours truly :)
+
+So the text is under the CC BY-SA 4.0 license, but the code is not.
