@@ -87,7 +87,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // typewriter effect: display text as if being typed at given WPM
   // 150 WPM ≈ 12.5 characters per second (150 words * 5 chars/word / 60 sec)
   // ≈ 80ms per character
-  function typeWriter(element, text, speed) {
+  // typewriter effect: display text as if being typed
+function typeWriter(element, text, speed) {
     let i = 0;
     element.innerHTML = ''; // Clear existing text
 
@@ -97,10 +98,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (text.charAt(i) === '<') {
                 let tagEnd = text.indexOf('>', i);
                 if (tagEnd !== -1) {
-                    // Append the entire tag at once so it renders instantly
                     element.innerHTML += text.substring(i, tagEnd + 1);
                     i = tagEnd + 1;
-                    // Immediately continue to next character to avoid delay
                     type(); 
                     return;
                 }
@@ -109,10 +108,14 @@ document.addEventListener('DOMContentLoaded', () => {
             // Append regular character
             element.innerHTML += text.charAt(i);
             i++;
-            setTimeout(type, speed); // Adjust 'speed' (ms) for faster/slower typing
+            
+            // --- NEW: Scroll instantly to bottom so user sees new text ---
+            scrollToBottom(false); 
+            
+            setTimeout(type, speed); 
         } else {
-            // Optional: Logic to run when typing finishes
-            // isProcessing = false; 
+            // Final smooth scroll just in case
+            scrollToBottom(true);
         }
     }
     type();
