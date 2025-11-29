@@ -88,31 +88,36 @@ document.addEventListener('DOMContentLoaded', () => {
   // typewriter effect: display text as if being typed at given WPM
   // 150 WPM ≈ 12.5 characters per second (150 words * 5 chars/word / 60 sec)
   // ≈ 80ms per character
-  function typewriterEffect(element, htmlText, wpm = 150) {
-    const charsPerSecond = (wpm * 5) / 60; // convert WPM to chars/second (avg 5 chars/word)
-    const delayPerChar = 1000 / charsPerSecond; // ms per character
+  function typeWriter(element, text, speed) {
+    let i = 0;
+    element.innerHTML = ''; // Clear existing text
 
-    element.innerHTML = ''; // clear the element
-    let charIndex = 0;
-
-    // parse HTML and flatten to text for typing
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = htmlText;
-    const fullText = tempDiv.textContent || tempDiv.innerText || '';
-
-    function typeNextChar() {
-      if (charIndex < fullText.length) {
-        element.innerHTML = fullText.substring(0, charIndex + 1);
-        charIndex++;
-        setTimeout(typeNextChar, delayPerChar);
-      } else {
-        // typing complete, render full HTML
-        element.innerHTML = htmlText;
-      }
+    function type() {
+        if (i < text.length) {
+            // Check if the current character starts an HTML tag
+            if (text.charAt(i) === '<') {
+                let tagEnd = text.indexOf('>', i);
+                if (tagEnd !== -1) {
+                    // Append the entire tag at once so it renders instantly
+                    element.innerHTML += text.substring(i, tagEnd + 1);
+                    i = tagEnd + 1;
+                    // Immediately continue to next character to avoid delay
+                    type(); 
+                    return;
+                }
+            }
+            
+            // Append regular character
+            element.innerHTML += text.charAt(i);
+            i++;
+            setTimeout(type, speed); // Adjust 'speed' (ms) for faster/slower typing
+        } else {
+            // Optional: Logic to run when typing finishes
+            // isProcessing = false; 
+        }
     }
-
-    typeNextChar();
-  }
+    type();
+}
 
   // receiving input, returns output text and next id
   function parseinput(inputstring, currentdivid){
@@ -207,7 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const newTextDiv = document.createElement('div');
       newTextDiv.className = 'question';
      // newTextDiv.innerHTML = newText;
-      typewriterEffect(newTextDiv, newText, 300); // 200 WPM typing effect
+      typeWriter(newTextDiv, newText, 300); // 200 WPM typing effect
       formElement.parentNode.insertBefore(newTextDiv, formElement);
       // scroll to the very bottom of the page so the form and new question are visible
       scrollToBottom(true);
