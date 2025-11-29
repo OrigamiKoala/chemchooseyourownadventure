@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let helpText = '';
   let outlineText = '';
   let JSoutline = null;
+  let currentTypingContext = null
 
   // preload help.txt
   fetch('help.txt')
@@ -88,11 +89,32 @@ document.addEventListener('DOMContentLoaded', () => {
   // 150 WPM ≈ 12.5 characters per second (150 words * 5 chars/word / 60 sec)
   // ≈ 80ms per character
   // typewriter effect: display text as if being typed
+// typewriter effect: display text as if being typed
 function typeWriter(element, text, speed) {
     let i = 0;
     element.innerHTML = ''; // Clear existing text
 
+    // NEW: Store the context and define a finish method
+    currentTypingContext = {
+        element: element,
+        text: text,
+        finished: false,
+        // A method to instantly finish the typing
+        finish: function() {
+            if (!this.finished) {
+                element.innerHTML = text; // Display all remaining text
+                this.finished = true;
+                // Cancel the current timeout if it exists (though the check in 'type' handles it)
+            }
+        }
+    };
+
     function type() {
+        // NEW: Check if the typing has been externally finished
+        if (currentTypingContext && currentTypingContext.finished) {
+            return; 
+        }
+
         if (i < text.length) {
             // Check if the current character starts an HTML tag
             if (text.charAt(i) === '<') {
@@ -104,21 +126,22 @@ function typeWriter(element, text, speed) {
                     return;
                 }
             }
-            
+
             // Append regular character
             element.innerHTML += text.charAt(i);
             i++;
-            
-            // --- NEW: Scroll instantly to bottom so user sees new text ---
+
+            // Scroll instantly to bottom so user sees new text
             scrollToBottom(false); 
-            
+
             setTimeout(type, speed); 
         } else {
-            // Final smooth scroll just in case
+            // Typing finished naturally
+            currentTypingContext.finished = true; // Mark as finished
             scrollToBottom(true);
         }
     }
-    type();
+    type(); 
 }
 
   // receiving input, returns output text and next id
@@ -181,7 +204,15 @@ function typeWriter(element, text, speed) {
     if (e && typeof e.preventDefault === 'function') {
       e.preventDefault();
     }
-    if (isProcessing) return;
+    // --- NEW INTERRUPTION LOGIC ---
+    if (currentTypingContext && !currentTypingContext.finished) {
+        // If typing is in progress, interrupt it instantly
+        currentTypingContext.finish();
+        // Allow the function to continue to append the user response and start the new question
+    } else if (isProcessing) {
+        // If processing is true and typing is NOT active (i.e., we are just waiting), block the submission
+        return;
+    }
     isProcessing = true;
 
     const userInput = inputField ? inputField.value : '';
