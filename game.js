@@ -4,6 +4,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const formElement = document.getElementById('responseform');
   const inputField = document.getElementById('response');
 
+  let currentid = 0;
+  let previousdivid = null;
+  let JSdata = null;
+  let isProcessing = false;
+  let helpText = '';
+
+  // preload help.txt
+  fetch('help.txt')
+    .then(response => response.text())
+    .then(data => { helpText = data; })
+    .catch(error => { console.error('Error loading help.txt:', error); });
 
   // load data from json and render initial prompt
   fetch('data.json')
@@ -50,16 +61,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let output = '';
     let nextdivid = currentdivid;
     if (inputstring == "help"){
-      // load help.txt
-      console.log('loading help.txt');
-      fetch('help.txt').then(response => response.text()).then(data => {
-      output = data.toString();
-      console.log('help.txt loaded');
-      console.log(output);
-      }).catch(error => {
-      console.error('Error loading help.txt:', error);
-      });
-      return [output, nextdivid];
+      // return preloaded help text
+      return [helpText || 'Loading help... please wait', currentdivid];
     } else if (inputstring == "outline"){
       output = "";
     } else if (inputstring == "undo"){
