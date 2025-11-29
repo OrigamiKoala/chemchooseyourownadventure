@@ -299,7 +299,7 @@ function typeWriter(element, text, speed, callback = () => {}) {
 
     // newTextDiv.innerHTML = newText;
     // Pass the cleanup function as the callback
-    typeWriter(newTextDiv, newText, 20, finishQuestionTyping); 
+   // typeWriter(newTextDiv, newText, 20, finishQuestionTyping); 
     
     formElement.parentNode.insertBefore(newTextDiv, formElement);
     
