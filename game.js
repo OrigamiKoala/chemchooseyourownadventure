@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (previousdiv && formElement) {
           const initialDiv = document.createElement('div');
           initialDiv.className = 'question';
-          typeWriter(initialDiv, initialText, 30);
+          typeWriter(initialDiv, initialText, 20);
           formElement.parentNode.insertBefore(initialDiv, formElement);
           // remove the original placeholder element if present so it doesn't duplicate
           if (qtext && qtext.parentNode) qtext.parentNode.removeChild(qtext);
@@ -73,7 +73,6 @@ document.addEventListener('DOMContentLoaded', () => {
   if (formElement) {
     formElement.addEventListener('submit', updategame);
     // set initial form height variable
-    updateFormHeightVar();
   }
 
   // utility: smooth scroll to bottom of page (so form + latest qtext are visible)
@@ -212,7 +211,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const newTextDiv = document.createElement('div');
       newTextDiv.className = 'question';
      // newTextDiv.innerHTML = newText;
-      typeWriter(newTextDiv, newText, 30); // 200 WPM typing effect
+      typeWriter(newTextDiv, newText, 20); // 200 WPM typing effect
       formElement.parentNode.insertBefore(newTextDiv, formElement);
       // scroll to the very bottom of the page so the form and new question are visible
       scrollToBottom(true);
