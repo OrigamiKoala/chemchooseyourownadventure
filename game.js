@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let outlineText = '';
   let JSoutline = null;
   let currentTypingContext = null
+  let typingTimeoutId = null
 
   // preload help.txt
   fetch('help.txt')
@@ -90,9 +91,16 @@ document.addEventListener('DOMContentLoaded', () => {
   // ≈ 80ms per character
   // typewriter effect: display text as if being typed
 // typewriter effect: display text as if being typed
+// typewriter effect: display text as if being typed
 function typeWriter(element, text, speed) {
     let i = 0;
     element.innerHTML = ''; // Clear existing text
+
+    // NEW: Reset the timeout ID when a new typing context starts
+    if (typingTimeoutId) {
+        clearTimeout(typingTimeoutId);
+        typingTimeoutId = null;
+    }
 
     // NEW: Store the context and define a finish method
     currentTypingContext = {
@@ -102,46 +110,37 @@ function typeWriter(element, text, speed) {
         // A method to instantly finish the typing
         finish: function() {
             if (!this.finished) {
+                // IMPORTANT: Immediately stop the pending timer
+                if (typingTimeoutId) {
+                    clearTimeout(typingTimeoutId);
+                    typingTimeoutId = null;
+                }
+                
                 element.innerHTML = text; // Display all remaining text
                 this.finished = true;
-                // Cancel the current timeout if it exists (though the check in 'type' handles it)
             }
         }
     };
-
+    
     function type() {
-        // NEW: Check if the typing has been externally finished
-        if (currentTypingContext && currentTypingContext.finished) {
-            return; 
-        }
+        // ... (existing check for currentTypingContext.finished) ...
 
         if (i < text.length) {
-            // Check if the current character starts an HTML tag
-            if (text.charAt(i) === '<') {
-                let tagEnd = text.indexOf('>', i);
-                if (tagEnd !== -1) {
-                    element.innerHTML += text.substring(i, tagEnd + 1);
-                    i = tagEnd + 1;
-                    type(); 
-                    return;
-                }
-            }
-
-            // Append regular character
-            element.innerHTML += text.charAt(i);
-            i++;
-
+            // ... (existing tag handling and character append logic) ...
+            
             // Scroll instantly to bottom so user sees new text
             scrollToBottom(false); 
-
-            setTimeout(type, speed); 
+            
+            // NEW: Assign the ID returned by setTimeout
+            typingTimeoutId = setTimeout(type, speed); 
         } else {
             // Typing finished naturally
             currentTypingContext.finished = true; // Mark as finished
+            typingTimeoutId = null; // Clear ID since it finished
             scrollToBottom(true);
         }
     }
-    type(); 
+    type();
 }
 
   // receiving input, returns output text and next id
