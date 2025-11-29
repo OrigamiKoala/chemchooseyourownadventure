@@ -74,7 +74,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // attach listener to form (safe when form exists)
   if (formElement) {
     formElement.addEventListener('submit', updategame);
-    // set initial form height variable
   }
 
   // utility: smooth scroll to bottom of page (so form + latest qtext are visible)
@@ -86,12 +85,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // typewriter effect: display text as if being typed at given WPM
-  // 150 WPM ≈ 12.5 characters per second (150 words * 5 chars/word / 60 sec)
-  // ≈ 80ms per character
-  // typewriter effect: display text as if being typed
-// typewriter effect: display text as if being typed
-// typewriter effect: display text as if being typed
 function typeWriter(element, text, speed, callback = () => {}) {
   console.log("typeWriter called");
   console.log(text);
@@ -101,6 +94,7 @@ function typeWriter(element, text, speed, callback = () => {}) {
     // ✅ NEW: UNCONDITIONAL STATE RESET
     if (typingTimeoutId) {
         clearTimeout(typingTimeoutId);
+        console.log('Cleared existing typing timeout');
     }
     typingTimeoutId = null;
     currentTypingContext = null; 
@@ -259,15 +253,14 @@ function typeWriter(element, text, speed, callback = () => {}) {
         // with the game logic yet. We just want to finish the typing.
         
         currentTypingContext.finish();
-        
-        // Return here. The user will need to press Enter/Submit *one more time* // to submit the form now that the text is complete.
-        // This is standard behavior for skipping typewriter effects.
+        console.log('Typing interrupted by user.');
     }
     
     // --- If we reach here, typing is either finished naturally or was just completed by the user ---
     
     // The original processing check (to prevent double submissions)
     if (isProcessing) {
+        console.log('isprocessing=true');
         return;
     }
     
@@ -303,6 +296,7 @@ function typeWriter(element, text, speed, callback = () => {}) {
     if (formElement) {
     const newTextDiv = document.createElement('div');
     newTextDiv.className = 'question';
+    console.log('Preparing to type new question text.');
     
     // --- ⬇️ NEW CLEANUP FUNCTION ⬇️ ---
     const finishQuestionTyping = () => {
