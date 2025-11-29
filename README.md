@@ -13,6 +13,8 @@ For those who aren't CS nerds:
 2. In your file manager, click on the zip and open it.
 3. Then, run the index.html file. Please note that most modern browsers (Chrome, Firefox, Safari, etc) have made their CORS rules stricter, which essentially means you can't open the html file in your browser. If you do, the game won't work properly. Either open the html file in a terminal, or in an older browser.
 
+**Please note that this game is still being developed; new content is constantly being added.**
+
 If you have any feedback (positive or otherwise), please feel free to fill out a feedback form at https://bit.ly/chemcyoafeedback.
 
 Since most of the code for this game was AI-generated (via Visual Studio Code's Github Copilot and Google Gemini), I cannot claim credit for that, or put it under a license.
