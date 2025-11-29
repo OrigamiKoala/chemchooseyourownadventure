@@ -125,23 +125,44 @@ function typeWriter(element, text, speed, callback = () => {}) {
     function type() {
         // ... (existing check for currentTypingContext.finished) ...
         if (currentTypingContext && currentTypingContext.finished) {
-            return; 
+            return;
         }
+
         if (i < text.length) {
-            // ... (existing tag handling and character append logic) ...
+            let delay = speed; // Default delay
+            let char = text.charAt(i);
+
+            // ✅ RESTORED/FIXED: Check for HTML tag
+            if (char === '<') {
+                let tagEnd = text.indexOf('>', i);
+                if (tagEnd !== -1) {
+                    // Append the entire tag at once
+                    element.innerHTML += text.substring(i, tagEnd + 1);
+                    i = tagEnd + 1;
+                    // Force a tiny delay after processing a tag/chunk
+                    delay = 1; 
+                }
+            } else {
+                // Append regular character
+                element.innerHTML += char;
+                i++;
+            }
             
             // Scroll instantly to bottom so user sees new text
-            scrollToBottom(false); 
-            // NEW: Assign the ID returned by setTimeout
-            typingTimeoutId = setTimeout(type, speed); 
+            scrollToBottom(false);
+
+            // Assign the ID returned by setTimeout, using the delay (1ms for tags, 'speed' for chars)
+            typingTimeoutId = setTimeout(type, delay); 
+            console.log("type ran: " + i); // Keep this for debugging
+            
         } else {
             // Typing finished naturally
-            currentTypingContext.finished = true; // Mark as finished
-            typingTimeoutId = null; // Clear ID since it finished
+            currentTypingContext.finished = true; 
+            typingTimeoutId = null; 
             scrollToBottom(true);
             callback();
+            console.log("Typing Finished");
         }
-      console.log("type ran");
     }
     type();
 }
