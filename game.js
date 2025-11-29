@@ -186,6 +186,7 @@ function typeWriter(element, text, speed, callback = () => {}) {
         }
       }
     type();
+  }
 }
 
   // receiving input, returns output text and next id
