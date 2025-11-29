@@ -135,19 +135,42 @@ function typeWriter(element, text, speed, callback = () => {}) {
 
             // ✅ RESTORED/FIXED: Check for HTML tag
             if (char === '<') {
-                let tagEnd = text.indexOf('>', i);
+              let tagEnd = text.indexOf('>', i);
+        
                 if (tagEnd !== -1) {
-                    // Append the entire tag at once
-                    element.innerHTML += text.substring(i, tagEnd + 1);
-                    i = tagEnd + 1;
-                    // Force a tiny delay after processing a tag/chunk
-                    delay = 1; 
-                }
-            } else {
-                // Append regular character
-                element.innerHTML += char;
-                i++;
-            }
+                  let tagContent = text.substring(i, tagEnd + 1);
+                  
+                  // 2. Check if it's the specific <button tag
+                  if (tagContent.startsWith('<button')) {
+                      
+                      // Find the closing </button> tag
+                      let closingTagStart = text.indexOf('</button>', i);
+      
+                      if (closingTagStart !== -1) {
+                          // Render the entire <button>...</button> structure instantly
+                          let fullButtonHtml = text.substring(i, closingTagStart + 9); // +9 for length of </button>
+                          element.innerHTML += fullButtonHtml;
+      
+                          // Set index i to after the closing tag
+                          i = closingTagStart + 9;
+                          delay = 1; // Tiny delay before next Qtext character
+                      } else {
+                          // Fallback for an unmatched opening tag (treat as a simple tag)
+                          element.innerHTML += tagContent;
+                          i = tagEnd + 1;
+                          delay = 1;
+                      }
+                  } else {
+                      // If not a button, treat as a simple tag (e.g., <b>, <br>)
+                      element.innerHTML += tagContent;
+                      i = tagEnd + 1;
+                      delay = 1;
+                  }
+              } else {
+                  // Append regular character
+                  element.innerHTML += char;
+                  i++;
+              }
             
             // Scroll instantly to bottom so user sees new text
             scrollToBottom(false);
