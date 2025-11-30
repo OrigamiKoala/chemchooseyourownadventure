@@ -9,7 +9,7 @@ Or, you can view it live at https://bit.ly/chem-cyoa.
 
 For those who aren't CS nerds:
 
-1. Go to the [main page](https://github.com/OrigamiKoala/chemchooseyourownadventure) for this repo and click on "Code" (the green button). Then, click "Download as Zip".
+1. Go to the [main page](https://github.com/OrigamiKoala/chem-text-adventure) for this repo and click on "Code" (the green button). Then, click "Download as Zip".
 2. In your file manager, click on the zip and open it.
 3. Then, run the index.html file. Please note that most modern browsers (Chrome, Firefox, Safari, etc) have made their CORS rules stricter, which essentially means you can't open the html file in your browser. If you do, the game won't work properly. Either open the html file in a terminal, or in an older browser.
 
