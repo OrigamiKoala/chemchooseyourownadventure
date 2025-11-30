@@ -92,9 +92,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // typewriter effect
   function typeWriter(element, text, speed, callback = () => {}) {
     console.log("typeWriter called");
-    console.log("element" = element);
-    console.log("text" = text);
-    console.log("speed" = speed);
+    console.log("element= " + element);
+    console.log("text= " + text);
+    console.log("speed= " + speed);
 
     let i = 0;
     element.innerHTML = ''; // Clear existing text
