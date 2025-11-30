@@ -207,6 +207,8 @@ document.addEventListener('DOMContentLoaded', () => {
     } else if (inputstring == "undo"){
       output = JSdata[previousdivid] ? (JSdata[previousdivid].text || '') : 'Previous not found';
       nextdivid = previousdivid;
+    } else if (inputstring == "" || inputstring == null){
+      currentTypingContext.finish();
     } else if (currentobj.type === 'frq') {
       if (inputstring === currentobj.correct) {
         nextdivid = currentobj.next;
