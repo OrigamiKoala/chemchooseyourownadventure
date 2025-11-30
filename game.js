@@ -315,6 +315,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (formElement) {
       if (newText == 'interrupt') {
         console.log("interrupt detected, no new question rendered");
+        scrollToBottom(true);
       } else {
         const newTextDiv = document.createElement('div');
         newTextDiv.className = 'question';
