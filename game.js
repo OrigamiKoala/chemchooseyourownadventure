@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let typingTimeoutId = null;
   let outlineclicked = false;
   let previouscontainer = null
+  let typespeed = 15;
 
   // preload help.txt
   fetch('help.txt')
@@ -67,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const initialDiv = document.createElement('div');
         initialDiv.className = 'question';
         newContainer.appendChild(initialDiv, formElement);
-        await typeWriter(initialDiv, splitinitialText[j], 10);
+        await typeWriter(initialDiv, splitinitialText[j], typespeed);
         j++;
       }
       // remove the original placeholder element if present so it doesn't duplicate
@@ -405,7 +406,7 @@ function findnode(nodeid) {
           } else {
             console.log("Typing part " + j + ": " + splitnewText[j]);
             newContainer.appendChild(newTextDiv, formElement);
-            await typeWriter(newTextDiv, splitnewText[j], 10, finishQuestionTyping);
+            await typeWriter(newTextDiv, splitnewText[j], typespeed, finishQuestionTyping);
             currentid = nextId;
           }
         }
