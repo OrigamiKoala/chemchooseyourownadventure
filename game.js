@@ -372,7 +372,6 @@ function findnode(nodeid) {
       }
     }
     let splitnewText = newText.split("--");
-    console.log("newText split into " + splitnewText.length + " parts.");
     const newContainer = document.createElement('div');
     formElement.parentNode.insertBefore(newContainer, formElement);
     for (var j=0; j<splitnewText.length;) {
