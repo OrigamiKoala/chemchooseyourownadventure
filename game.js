@@ -108,6 +108,7 @@ function findnode(nodeid) {
 
   // typewriter effect
   function typeWriter(element, text, speed, callback = () => {}) {
+    return new Promise(resolve => {
     console.log("typeWriter called");
     console.log("element= " + element);
     console.log("text= " + text);
@@ -125,23 +126,23 @@ function findnode(nodeid) {
 
     // finish typing if form is resubmitted
     currentTypingContext = {
-      element: element,
-      text: text,
-      finished: false,
-      // A method to instantly finish the typing
+          element: element,
+          text: text,
+          finished: false,
+    // A method to instantly finish the typing
       finish: function() {
-          if (!this.finished) {
-              // IMPORTANT: Immediately stop the pending timer
-              if (typingTimeoutId) {
-                  clearTimeout(typingTimeoutId);
-                  typingTimeoutId = null;
-              }
-              console.log('finish() called');
-              element.innerHTML = text; // Display all remaining text
-              this.finished = true;
-          }
+        if (!this.finished) {
+            // IMPORTANT: Immediately stop the pending timer
+            if (typingTimeoutId) {
+                clearTimeout(typingTimeoutId);
+                typingTimeoutId = null;
+            }
+            console.log('finish() called');
+            element.innerHTML = text; // Display all remaining text
+            this.finished = true;
+        }
       }
-    };
+    }
     
     function type() {
       // if finished typing, move on
@@ -226,12 +227,14 @@ function findnode(nodeid) {
         typingTimeoutId = null; 
         scrollToBottom(true);
         callback();
+        resolve();
         console.log("Typing complete, callback executed");
       }
       console.log("character typed");
     }
     type();
     console.log("typeWriter finished");
+    });
   }
 
   // receiving input, returns output text and next id
@@ -320,47 +323,51 @@ function findnode(nodeid) {
 
   // update the game
   async function updategame(e) {
-    try{
-      console.log("updategame called");
-      // prevent form submission from reloading the page
-      if (e && typeof e.preventDefault === 'function') {
-        e.preventDefault();
+    console.log("updategame called");
+    // prevent form submission from reloading the page
+    if (e && typeof e.preventDefault === 'function') {
+      e.preventDefault();
+    }
+    
+    // if typing in progress, stop it
+    if (currentTypingContext && !currentTypingContext.finished) { 
+      currentTypingContext.finish();
+      console.log('Typing interrupted by user.');
+    }
+
+    const userInput = inputField ? inputField.value : '';
+    let [newText, nextId] = parseinput(userInput, currentid);
+    inputField.value = '';
+
+    // append only the user's response to the history (do not re-insert the previous question text)
+    if (previousdiv) {
+      const container = document.createElement('div');
+      container.className = 'response';
+      container.innerHTML = `<div>${encodeURIComponent(userInput)}</div>`;
+      // insert the container just before the form so it appears in history
+      if (formElement && previousdiv === formElement.parentNode) {
+        previousdiv.insertBefore(container, formElement);
+      } else {
+        previousdiv.appendChild(container);
       }
       
-      // if typing in progress, stop it
-      if (currentTypingContext && !currentTypingContext.finished) { 
-        currentTypingContext.finish();
-        console.log('Typing interrupted by user.');
+      // insert an empty line after user input
+      const emptyLine = document.createElement('div');
+      emptyLine.className = 'spacer';
+      if (formElement && previousdiv === formElement.parentNode) {
+        previousdiv.insertBefore(emptyLine, formElement);
+      } else {
+        previousdiv.appendChild(emptyLine);
       }
-
-      const userInput = inputField ? inputField.value : '';
-      let [newText, nextId] = parseinput(userInput, currentid);
-      inputField.value = '';
-
-      // append only the user's response to the history (do not re-insert the previous question text)
-      if (previousdiv) {
-        const container = document.createElement('div');
-        container.className = 'response';
-        container.innerHTML = `<div>${encodeURIComponent(userInput)}</div>`;
-        // insert the container just before the form so it appears in history
-        if (formElement && previousdiv === formElement.parentNode) {
-          previousdiv.insertBefore(container, formElement);
-        } else {
-          previousdiv.appendChild(container);
-        }
-        
-        // insert an empty line after user input
-        const emptyLine = document.createElement('div');
-        emptyLine.className = 'spacer';
-        if (formElement && previousdiv === formElement.parentNode) {
-          previousdiv.insertBefore(emptyLine, formElement);
-        } else {
-          previousdiv.appendChild(emptyLine);
-        }
-      }
-      const splitnewText = newText.split("<br>");
-      for (var j=0; j<splitnewText.length;) {
-        // insert newText above the form as a question element
+    }
+    const splitnewText = newText.split("<br>");
+    console.log("newText split into " + splitnewText.length + " parts.");
+    for (var j=0; j<splitnewText.length;) {
+      if (!splitnewText[j] || splitnewText[j].trim() === '') {
+        j++;
+        continue;
+      } else {
+      // insert newText above the form as a question element
         if (formElement) {
           if (splitnewText[j] == 'interrupt') {
             console.log("interrupt detected, no new question rendered");
@@ -371,7 +378,7 @@ function findnode(nodeid) {
             newTextDiv.className = 'question';
             
             // cleanup function to run after typing is done
-            function finishQuestionTyping() {
+            const finishQuestionTyping = () => {
                 // reload html 
               newTextDiv.innerHTML = splitnewText[j];
               // Final cleanup for the input field
@@ -380,24 +387,21 @@ function findnode(nodeid) {
                 inputField.value = '';
                 inputField.focus(); 
               }
-                
                 // Ensure final scroll is smooth
               scrollToBottom(true);
-              return new Promise ((resolve) => { resolve()} );
+              ready = true;
+              j++;
             };
-            const response = await finishQuestionTyping();
 
             console.log("Typing part " + j + ": " + splitnewText[j]);
-            typeWriter(newTextDiv, splitnewText[j], 10, finishQuestionTyping); 
             formElement.parentNode.insertBefore(newTextDiv, formElement);
+            await typeWriter(newTextDiv, splitnewText[j], 10, finishQuestionTyping);
             currentid = nextId;
           }
         }
       }
-      console.log("updategame completed");
-    } catch (error) {
-      console.error('Error in updategame:', error);
     }
+    console.log("updategame completed");
   }
 });
 
