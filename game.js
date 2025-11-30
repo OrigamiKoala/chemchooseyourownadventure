@@ -167,8 +167,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 i = tagEnd + 1;
                 delay = 1;
               }
+            } else if (tagContent.startsWith('<ol')) {
+              console.log("<ol> tag detected at index " + i);
+              // Find the closing </ol> tag
+              let closingTagStart = text.indexOf('</ol>', i);
+
+              if (closingTagStart !== -1) {
+                // Render the entire <ol>...</ol> structure instantly
+                let fullOlHtml = text.substring(i, closingTagStart + 5); // +5 for length of </ol>
+                element.innerHTML += fullOlHtml;
+
+                // Set index i to after the closing tag
+                i = closingTagStart + 5;
+                delay = 1; // Tiny delay before next Qtext character
+              } else {
+                // Fallback for an unmatched opening tag (treat as a simple tag)
+                element.innerHTML += tagContent;
+                i = tagEnd + 1;
+                delay = 1;
+              }
             } else {
-              console.log("Non-button HTML tag detected at index " + i);
+              console.log("Non-button/list HTML tag detected at index " + i);
               // If not a button, treat as a simple tag (e.g., <b>, <br>)
               element.innerHTML += tagContent;
               i = tagEnd + 1;
