@@ -1,4 +1,4 @@
-# chemchooseyourownadventure
+# chem-text-adventure
 This is a choose your own adventure game, built by Carl, in an attempt to gamify the learning of chemistry.
 
 Hopefully I was (at least somewhat) successful!
@@ -14,6 +14,8 @@ For those who aren't CS nerds:
 3. Then, run the index.html file. Please note that most modern browsers (Chrome, Firefox, Safari, etc) have made their CORS rules stricter, which essentially means you can't open the html file in your browser. If you do, the game won't work properly. Either open the html file in a terminal, or in an older browser.
 
 **Please note that this game is still being developed; new content is constantly being added.**
+
+I will try to release new updates every Saturday, though the updates might only modify old content, instead of introducing new modules.
 
 If you have any feedback (positive or otherwise), please feel free to fill out a feedback form (https://bit.ly/chemcyoafeedback).
 
