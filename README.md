@@ -9,13 +9,13 @@ Or, you can view it live at https://bit.ly/chemcyoa.
 
 For those who aren't CS nerds:
 
-1. Go to (https://github.com/OrigamiKoala/chemchooseyourownadventure) and click on "Code" (the green button). Then, click "Download as Zip".
+1. Go to the [main page](https://github.com/OrigamiKoala/chemchooseyourownadventure) for this repo and click on "Code" (the green button). Then, click "Download as Zip".
 2. In your file manager, click on the zip and open it.
 3. Then, run the index.html file. Please note that most modern browsers (Chrome, Firefox, Safari, etc) have made their CORS rules stricter, which essentially means you can't open the html file in your browser. If you do, the game won't work properly. Either open the html file in a terminal, or in an older browser.
 
 **Please note that this game is still being developed; new content is constantly being added.**
 
-If you have any feedback (positive or otherwise), please feel free to fill out a feedback form at https://bit.ly/chemcyoafeedback.
+If you have any feedback (positive or otherwise), please feel free to fill out a feedback form (https://bit.ly/chemcyoafeedback).
 
 Most of the code for this game was AI-generated (via Visual Studio Code's Github Copilot and Google Gemini). I did do quite a bit of editing (because AI is not that good at writing bug-free code yet...or at visual design...), but since some of the code is AI generated, I cannot claim credit for it, or put it under a license.
 
