@@ -3,6 +3,11 @@ List of commands:
 <br> 'outline' - open up the outline (can jump to different sections)
 <br> 'undo' - undo previous response (you can't undo more than that)
 <br>
+<br>Links:
+<br>Online Web version: https://bit.ly/chem-cyoa 
+<br>Repository: https://github.com/OrigamiKoala/chem-text-adventure
+<br>Feedback form: https://bit.ly/chemcyoafeedback 
+<br>
 <br>You can skip the typing animation by hitting the enter key.
 <br>To restart the game, just reload the page or relaunch the HTML file. Your progress will not be saved; you can jump to the section you were on by typing 'outline'
 <br>

@@ -157,6 +157,14 @@ button[type=submit]:active{transform:translateY(1px)}
 .outline:active{ opacity:0.9 }
 .outline:focus{ outline: 2px solid rgba(125,211,252,0.12); outline-offset: 2px; }
 
+:link{
+    color:rgb(99, 99, 255)
+}
+
+:visited{
+    color:rgb(208, 15, 208)
+}
+
 /* small screens */
 @media (max-width:600px){
     body{padding:18px}
