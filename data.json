@@ -1,4 +1,5 @@
-[
+{
+  "pchem_nodes": [
     {
       "id": "initial",
       "text": "Welcome to a choose-your-own-adventure game made by Carl, where you get to have fun (hopefully) and also learn some chemistry along the way (also hopefully)!\n--\nThis game is interactive; type your response in the box below and hit the \"Enter\" key.\n--\nIf you wish to skip the typing animation, hit the 'Enter' key again.\n--\nIf you wish to restart at any time, reload the page.\n--\nSometimes, you will be asked a question with multiple choices given; to respond, input the number next to your desired choice. For example, if the options are '1. banana, 2. apple, 3. orange' and you would like to answer 'banana', type '1'.\n--\nIf you are asked to respond with a word/phrase, make sure it is lowercase and spelled correctly. If you are typing a long response, capitalize as you please.\n--\nIf at any point you wish to see a list of commands or how to format your answer, type 'help'.\n--\nTyping 'outline' will generate an outline of content; you can skip to the section you wish.\n--\nIf you wish to take back your answer, type 'undo'. Note that this works only for the previous answer; you cannot undo more than that (as of right now).\n--\nThe game will display previous prompts for your reference. If you wish to print it out, just hit Ctrl+P or Cmd+P (for Mac).\n--\nYou can find the GitHub repository for this app at <a href=\"https://github.com/OrigamiKoala/chem-text-adventure\">https://github.com/OrigamiKoala/chem-text-adventure</a>\n--\nType anything to start from the beginning.",
@@ -12,7 +13,7 @@
     },
     {
       "id": "end",
-      "text": "And that is where the story ends...for now. Check back in a couple days and there might be something new :)\n--\nCheck out GitHub repository for this app at <a href=\"https://github.com/OrigamiKoala/chem-text-adventure\">https://github.com/OrigamiKoala/chem-text-adventure</a>\n--\nIt would be greatly appreciated if you could take a minute to fill out a super short <a href=\"http://bit.ly/chemcyoafeedback\">feedback form</a>. Thank you so much!",
+      "text": "And that is where the story ends...for now. Check back in a couple days and there might be something new :)\n--\nCheck out GitHub repository for this app at <a href=\"https://github.com/OrigamiKoala/chem-text-adventure\">https://github.com/OrigamiKoala/chem-text-adventure</a>\n--\nInterested in chemistry? Check out:\n<ul>\n<li><i>Cartoon Guide to Chemistry</i></li>\n<li>Khan Academy's Chemistry courses</li>\n<li><i>Chemistry</i> by Steven S. Zumdahl</li>\n<li><i>Chemical Principles</i> by Steven S. Zumdahl</li>\n<li><i>Atkins' Chemical Principles</i> by Peter Atkins</li>\n<li><i>Atkins' Physical Chemistry</i> by Peter Atkins</li>\n<li><i>Inorganic Chemistry</i> by Gary L. Miessler</li>\n<li><i>Organic Chemistry</i> by David Klein</li>\n<li><i>Organic Chemistry</i> by Jonathan Clayden</li>\n</ul>\n--\nIt would be greatly appreciated if you could take a minute to fill out a super short <a href=\"http://bit.ly/chemcyoafeedback\">feedback form</a>. Thank you so much!",
       "type": "fr",
       "next": null,
       "correct": null,
@@ -34,7 +35,7 @@
     },
     {
       "id": "atomscover",
-      "text": "<h1>Section 1: Atoms</h1>\n--\n<h3>History of the Atom</h3>\n--\nA long long time ago, some ancient Greek dudes asked a very interesting question: Could you keep on slicing something into smaller pieces forever?\n--\nWhat do you think?\n--\n<ol type = \"1\">\n<li>Yes, definitely!</li>\n<li>Uhh....no</li>\n</ol>",
+      "text": "<h1>Section 1: Atoms and Molecules</h1>\n--\n<h3>History of the Atom</h3>\n--\nA long long time ago, some ancient Greek dudes asked a very interesting question: Could you keep on slicing something into smaller pieces forever?\n--\nWhat do you think?\n--\n<ol type = \"1\">\n<li>Yes, definitely!</li>\n<li>Uhh....no</li>\n</ol>",
       "type": "mcq",
       "next": null,
       "correct": null,
@@ -156,17 +157,6 @@
     {
       "id": "magnets",
       "text": "<h3>Atomic Structure</h3>\n--\nYou know about <a href=\"https://science.howstuffworks.com/magnet.htm\">magnets</a>, right? They have a North pole and a South pole. One of them is positively charged, and the other is negatively charged. Do you know which one is which? (It's okay if you don't; I didn't either until I searched it up)\n--\n<ol type = \"1\">\n<li>North is positive, South is negative</li>\n<li>South is positive, North is negative</li>\n<li>I don't know</li>",
-      "type": "fr",
-      "next": "attraction",
-      "correct": null,
-      "op1": null,
-      "op2": null,
-      "op3": null,
-      "op4": null
-    },
-    {
-      "id": "attraction",
-      "text": "The positive end of one magnet attracts the negative end of another magnet. I know that's confusing, but hey, I didn't make up the laws of physics :)\n--\nAs a result of the positive ends and negative ends being attracted, the positive end snaps to the negative end if you bring them close enough. If you want, now is the time to grab some magnets and try this out. This is also oddly satisfying.\n--\nType anything to continue.",
       "type": "mcq",
       "next": null,
       "correct": null,
@@ -179,7 +169,7 @@
       "id": "northpos",
       "text": "Nice job! I didn't know this, but apparently the north pole is generally considered the positive end? Which is funny, because Earth's \"North Pole\" (the one with Santa) is actually negative...and Earth actually has two North Poles...and the North and South Pole flip every couple thousand years...(see <a href=\"https://worldoceanreview.com/en/wor-6/the-arctic-and-antarctic-natural-realms-at-the-poles/a-brief-history-of-the-polar-regions/the-earths-wandering-poles/\">here</a>\n--\nThe real world is so confusing.\n--\nType anything to continue.",
       "type": "fr",
-      "next": "atompos",
+      "next": "attraction",
       "correct": null,
       "op1": null,
       "op2": null,
@@ -190,7 +180,7 @@
       "id": "southpos",
       "text": "You're actually half right. Turns out the Earth's \"South Pole\" is positive. But it's generally accepted that for most magnets, the north pole is the positive end, and the south pole is the negative end. See more about the Earth's wacky four different poles <a href=\"https://worldoceanreview.com/en/wor-6/the-arctic-and-antarctic-natural-realms-at-the-poles/a-brief-history-of-the-polar-regions/the-earths-wandering-poles/\">here</a>.\n--\nBut hey, I didn't know the North was positive either, at least until I searched it up.\n--\nType anything to continue.",
       "type": "fr",
-      "next": "atompos",
+      "next": "attraction",
       "correct": null,
       "op1": null,
       "op2": null,
@@ -200,6 +190,17 @@
     {
       "id": "idkpos",
       "text": "That's ok! I didn't know either until I searched it up. It's good that you aren't randomly guessing - for this game, guessing is fine, but in real world science, try not to guess too much :)\n--\nTurns out the north pole of a magnet is the positive end, and the south pole is the negative end. But for this planet we live on, it's actually the opposite - our \"North Pole\" (the one with Santa) is negative...but the poles switch every couple thousand years... (see <a href=\"https://worldoceanreview.com/en/wor-6/the-arctic-and-antarctic-natural-realms-at-the-poles/a-brief-history-of-the-polar-regions/the-earths-wandering-poles/\">here</a>)\n--\nNot at all confusing...\n--\nType anything to continue",
+      "type": "fr",
+      "next": "attraction",
+      "correct": null,
+      "op1": null,
+      "op2": null,
+      "op3": null,
+      "op4": null
+    },
+    {
+      "id": "attraction",
+      "text": "The positive end of one magnet attracts the negative end of another magnet. I know that's confusing, but hey, I didn't make up the laws of physics :)\n--\nAs a result of the positive ends and negative ends being attracted, the positive end snaps to the negative end if you bring them close enough. If you want, now is the time to grab some magnets and try this out. This is also oddly satisfying.\n--\nType anything to continue.",
       "type": "fr",
       "next": "atompos",
       "correct": null,
@@ -278,7 +279,7 @@
       "id": "legos",
       "text": "All atoms are made of protons, neutrons, and electrons - but with different amounts.\n--\nThe number of protons in an atom's nucleus determines its \"element\". Atoms are kind of like Legos - they come in different types.\n--\nThe number of protons and electrons determines how an atom behaves. Atoms with different numbers of protons and electrons behave differently, kind of like how Legos with different shapes fit together differently and are used for different things.\n--\nWe have a table of all the different elements - called the \"Periodic Table of the Elements\" or just the \"Periodic Table\". \n<br><img src = \"https://www.nist.gov/sites/default/files/styles/social/public/images/2024/06/25/NIST_periodictable_June24_iupac_Page_1.png?itok=odSH_Vgc\" alt=\"Periodic Table\">\n--\nFun fact: there is also a periodic table of legos: \n<br><img src = \"https://images.brickset.com/news/99007_P1078365.JPG\" alt = \"Periodic Table of Lego Colors\">\n--\nType anything to continue.",
       "type": "fr",
-      "next": "end",
+      "next": "isotopes",
       "correct": null,
       "op1": null,
       "op2": null,
@@ -287,8 +288,8 @@
     },
     {
       "id": "isotopes",
-      "text": "<h3>Isotopes and Atomic Mass</h3>\n--\nAtoms with the same number of protons but <i>different</i> numbers of neutrons are called <i>isotopes</i>. They pretty much behave the same, but look different - like how",
-      "type": null,
+      "text": "<h3>Isotopes and Atomic Mass</h3>\n--\nAtoms with the same number of protons but <i>different</i> numbers of neutrons are called <i>isotopes</i>. They pretty much behave the same, but look different - like how different Legos with the same shape but different color behave the same, but look different.\n--\nType anything to continue.",
+      "type": "fr",
       "next": null,
       "correct": null,
       "op1": null,
@@ -296,4 +297,37 @@
       "op3": null,
       "op4": null
     }
+  ],
+  "active_pchem_outline": [
+    {
+      "reference_num": 1,
+      "content": "Atoms and Molecules",
+      "div": "atomscover"
+    },
+    {
+      "reference_num": 1.1,
+      "content": "History of the Atom",
+      "div": "atomscover"
+    },
+    {
+      "reference_num": 1.2,
+      "content": "Atomic Structure",
+      "div": "magnets"
+    },
+    {
+      "reference_num": 1.3,
+      "content": "Isotopes and Atomic Mass",
+      "div": "isotopes"
+    },
+    {
+      "reference_num": 1.4,
+      "content": "Molecular Formulas",
+      "div": "error"
+    },
+    {
+      "reference_num": 1.5,
+      "content": "Percent Composition",
+      "div": "error"
+    }
   ]
+}

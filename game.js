@@ -27,10 +27,10 @@ document.addEventListener('DOMContentLoaded', () => {
     .catch(error => { console.error('Error loading help text:', error); });
 
   // preload outline.json
-  fetch('outline.json')
+  fetch('data.json')
     .then(response => response.json())
     .then(data => {
-      JSoutline = data;
+      JSoutline = data.active_pchem_outline;
       if (JSoutline) {
         outlineText = 'Click on a section to jump to it.<br>';
         for (const item of JSoutline) {
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
   fetch('data.json')
     .then(response => response.json())
     .then(async data => {
-      JSdata = data;
+      JSdata = data.pchem_nodes;
       let initialText = findnode("initial").text;
       let splitinitialText = initialText.split("--");
       if (qtext && qtext.parentNode) qtext.parentNode.removeChild(qtext);
