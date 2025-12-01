@@ -145,9 +145,11 @@ function findnode(nodeid) {
             // Display all remaining text
             let newText = findnode(currentid).text;
             let splitnewText = newText.split("--");
-            previouscontainer.innerHTML = '';
-            let newContainer = previouscontainer;
+            previouscontainer.remove();
+            let newContainer = document.createElement('div');
+            formElement.parentNode.insertBefore(newContainer, formElement);
             for (var n=0; n<splitnewText.length;) {
+              console.log("Rendering interrupted text part " + n + ": " + splitnewText[n]);
               const newinterruptTextDiv = document.createElement('div');
               newinterruptTextDiv.className = 'question';
               newinterruptTextDiv.innerHTML = splitnewText[n];
@@ -379,6 +381,7 @@ function findnode(nodeid) {
     let splitnewText = newText.split("--");
     const newContainer = document.createElement('div');
     formElement.parentNode.insertBefore(newContainer, formElement);
+    previouscontainer = newContainer;
     for (var j=0; j<splitnewText.length;) {
       if (!splitnewText[j] || splitnewText[j].trim() === '') {
         j++;
@@ -418,7 +421,6 @@ function findnode(nodeid) {
         }
       }
     }
-    previouscontainer = newContainer;
     console.log("updategame completed");
   }
 });
