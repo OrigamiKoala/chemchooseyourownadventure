@@ -299,7 +299,7 @@ function findnode(nodeid) {
         const nextobj = findnode(nextdivid);
         output = nextobj ? (nextobj.text || '') : 'Oops. I couldn\'t find the next part. Looks like you found a bug!';
       } else {
-        output = 'Oops. That didn\' seeem to be exactly right. But that\'s okay; we all make mistakes! Check your formatting/spelling and try again :)';
+        output = 'Oops. That didn\' seeem to be exactly right. But that\'s okay; we all make mistakes! Check your answer and try again :) Remember to spell/format your answer correctly! For more information on formatting, type "help".';
       }
     } else if (inputstring == 'default' && outlineclicked===true) {
       outlineclicked===false;
@@ -325,7 +325,7 @@ function findnode(nodeid) {
         previousdivid = currentdivid;
       } else {
         console.log("Unrecognized answer choice: " + inputstring);
-        output = 'That doesn\'t seem to be an answer choice. Please enter the number corresponding to your choice, and try again.';
+        output = 'Hmmmm...that doesn\'t seem to be an answer choice. Please enter the number corresponding to your choice, and try again.';
         nextdivid = currentdivid;
         return [output, nextdivid];
       }
