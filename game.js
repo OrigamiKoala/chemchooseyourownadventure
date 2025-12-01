@@ -144,6 +144,7 @@ function findnode(nodeid) {
             console.log('finish() called');
             // Display all remaining text
             let newText = findnode(currentid).text;
+            console.log(currentid);
             let splitnewText = newText.split("--");
             previouscontainer.remove();
             let newContainer = document.createElement('div');
@@ -287,11 +288,10 @@ function findnode(nodeid) {
     } else if (inputstring == "undo"){
       output = findnode(previousdivid) ? (findnode(previousdivid).text || '') : 'Previous not found';
       nextdivid = previousdivid;
-    } else if (inputstring == 'default' && outlineclicked===false) {
+    } else if (inputstring == "default" && outlineclicked===false) {
       // allow user to press enter and skip typing animation
       currentTypingContext.finish();
       console.log("Input empty, typing interrupted");
-      previousdivid = currentdivid;
       return ['interrupt', currentdivid];
     // handle normal input
     } else if (currentobj.type === 'frq') {
@@ -304,7 +304,8 @@ function findnode(nodeid) {
         output = 'Oops. That didn\' seeem to be exactly right. But that\'s okay; we all make mistakes! Check your answer and try again :) Remember to spell/format your answer correctly! For more information on formatting, type "help".';
       }
     } else if (inputstring == 'default' && outlineclicked===true) {
-      outlineclicked===false;
+      console.log("Jumping");
+      outlineclicked=false;
       return [findnode(currentid).text, currentid];
     } else if (currentobj.type === 'fr') {
       previousdivid = currentdivid;
@@ -355,6 +356,7 @@ function findnode(nodeid) {
 
     const userInput = inputField ? inputField.value : '';
     let [newText, nextId] = parseinput(userInput, currentid);
+    currentid = nextId; // update currentid immediately to reflect any jumps
     inputField.value = '';
 
     // append only the user's response to the history (do not re-insert the previous question text)
@@ -369,55 +371,48 @@ function findnode(nodeid) {
         } else {
           previousdiv.appendChild(container);
         }
-      }
-      
-      // insert an empty line after user input
-      if (formElement && previousdiv === formElement.parentNode) {
-        previousdiv.insertBefore(emptyLine, formElement);
-      } else {
-        previousdiv.appendChild(emptyLine);
+        // insert an empty line after user input
+        if (formElement && previousdiv === formElement.parentNode) {
+          previousdiv.insertBefore(emptyLine, formElement);
+        } else {
+          previousdiv.appendChild(emptyLine);
+        }
       }
     }
     let splitnewText = newText.split("--");
     const newContainer = document.createElement('div');
-    formElement.parentNode.insertBefore(newContainer, formElement);
-    previouscontainer = newContainer;
-    for (var j=0; j<splitnewText.length;) {
-      if (!splitnewText[j] || splitnewText[j].trim() === '') {
-        j++;
-        continue;
-      } else {
-        const newTextDiv = document.createElement('div');
-        newTextDiv.className = 'question';
-          
-        // cleanup function to run after typing is done
-        const finishQuestionTyping = () => {
-            // reload html 
-          newTextDiv.innerHTML = splitnewText[j];
-          newTextDiv.insertAdjacentHTML('afterend', emptyLine.outerHTML);
-          // Final cleanup for the input field
-          const inputField = document.getElementById('response');
-          if (inputField) { 
-            inputField.value = '';
-            inputField.focus(); 
-          }
-            // Ensure final scroll is smooth
-          scrollToBottom(true);
-          ready = true;
-          j++;
-        };
       // insert newText above the form as a question element
-        if (formElement) {
-          if (splitnewText[j] == 'interrupt') {
-            console.log("interrupt detected, no new question rendered");
-            return;
-          } else {
-            console.log("Typing part " + j + ": " + splitnewText[j]);
-            newContainer.appendChild(newTextDiv, formElement);
-            newContainer.appendChild(emptyLine, formElement);
-            await typeWriter(newTextDiv, splitnewText[j], typespeed, finishQuestionTyping);
-            currentid = nextId;
-          }
+    if (formElement) {
+      if (splitnewText[0] == 'interrupt') {
+        console.log("interrupt detected, no new question rendered");
+        return;
+      } else {
+        formElement.parentNode.insertBefore(newContainer, formElement);
+        previouscontainer = newContainer;
+        for (var j=0; j<splitnewText.length;) {
+          const newTextDiv = document.createElement('div');
+          newTextDiv.className = 'question';
+            
+          // cleanup function to run after typing is done
+          const finishQuestionTyping = () => {
+              // reload html 
+            newTextDiv.innerHTML = splitnewText[j];
+            newTextDiv.insertAdjacentHTML('afterend', emptyLine.outerHTML);
+            // Final cleanup for the input field
+            const inputField = document.getElementById('response');
+            if (inputField) { 
+              inputField.value = '';
+              inputField.focus(); 
+            }
+              // Ensure final scroll is smooth
+            scrollToBottom(true);
+            ready = true;
+            j++;
+          };
+          console.log("Typing part " + j + ": " + splitnewText[j]);
+          newContainer.appendChild(newTextDiv, formElement);
+          newContainer.appendChild(emptyLine, formElement);
+          await typeWriter(newTextDiv, splitnewText[j], typespeed, finishQuestionTyping);
         }
       }
     }
